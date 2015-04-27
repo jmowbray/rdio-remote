@@ -2,7 +2,7 @@
   "name": "Rdio Remote",
   "version": "0.0.1",
   "manifest_version": 2,
-  "description": "Adds Rdio controls to the bottom of every page",
+  "description": "Control Rdio regardless of the active browser tab.",
   "background": {
     "scripts": ["js/lib/underscore-min.js", "js/background.js"]
   },  
