@@ -38,6 +38,11 @@ button {
     font-size: 24px !important;
 }
 
+.album-art {
+    width: 200px;
+    height: 200px;
+}
+
 .left-half {
     display: inline-block;
     width: 50%;
