@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+  <head>  
+    <script src="/js/lib/jquery-2.1.3.min.js"></script>
+    <script src="/js/lib/underscore-min.js"></script>
+    <script src="/js/popup.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/font-awesome-4.3.0/css/font-awesome.min.css">	
+  </head>  
+  
+  <body>
+    <div class="remote-controls-wrapper">      
+
+      <div class="left-half">
+          <img class="js-album-art"/>
+      </div>
+      
+
+      <div class="right-half">        
+        
+        <div class="controls">
+          <div class="control-wrapper js-prev">
+            <i class="js-command-btn fa fa-fast-backward" data-command="prev"></i>
+          </div>
+          <div class="control-wrapper js-play">
+            <i class="js-command-btn fa fa-play" data-command="playpause"></i>
+          </div>
+          <div class="control-wrapper js-pause" style="display: none;">
+            <i class="js-command-btn fa fa-pause" data-command="playpause"></i>
+          </div>
+          <div class="control-wrapper js-next">
+            <i class="js-command-btn fa fa-fast-forward" data-command="next"></i>
+          </div>
+        </div>
+
+        <div class="song-details">          
+          <div class="song-detail"><i class="fa fa-music"></i> <span class="js-song-title"></span></div>
+          <div class="song-detail"><i class="fa fa-user"></i> <span class="js-artist-title"></span></div>
+        </div>
+
+      </div>
+
+
+      <div class="bottom">
+        <div class="time-elapsed js-time"></div>
+        <progress class="js-progress-bar progress-bar" value="0" max="100"></progress>
+        <div class="duration js-duration"></div>
+      </div>
+
+
+      
+    </div>  
+    <span class="js-current-rdio-tab-id" style="display:none;"></span>
+
+    <div class="session-not-found-wrapper" style="display: none;">
+      Unable to detect current Rdio session
+    </div>  
+  </body>
+
+</html>

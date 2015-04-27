@@ -1,0 +1,80 @@
+body {
+    width: 400px;
+    height: 220px;
+    background-color: gray;
+    color: white;
+}
+
+button {
+    cursor: pointer;
+}
+
+.remote-controls-wrapper {
+    width: 100%;
+}
+
+.current-song {
+    float: right
+}
+
+.control-wrapper {
+    text-align: center;
+    display: inline-block;
+    width: 30%;
+    font-size: 30px;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
+.control-wrapper i {
+    cursor: pointer;
+}
+
+.fa-fast-forward {
+    font-size: 24px !important;
+}
+
+.fa-fast-backward {
+    font-size: 24px !important;
+}
+
+.left-half {
+    display: inline-block;
+    width: 50%;
+}
+
+.right-half {
+    display: inline-block;
+    width: 45%;
+    float: right;
+    padding-left: 8px;
+}
+
+.song-detail {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.bottom {
+    width: 100%;
+    margin-top: 8px;
+}
+
+.time-elapsed {
+    display: inline-block;
+    width: 10%;
+    font-size: 12px;
+}
+
+.progress-bar {
+    display: inline-block;
+    width: 75%;
+}
+
+.duration {
+    display: inline-block;
+    width: 10%;
+    float: right;
+    font-size: 12px;
+}

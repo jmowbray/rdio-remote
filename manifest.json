@@ -1,0 +1,26 @@
+{
+  "name": "Rdio Remote",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Adds Rdio controls to the bottom of every page",
+  "background": {
+    "scripts": ["js/lib/underscore-min.js", "js/background.js"]
+  },  
+  "browser_action": {
+    "default_popup": "html/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "js/lib/underscore-min.js", 
+        "js/lib/jquery-2.1.3.min.js", 
+        "js/pageContent.js"]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "background",
+    "http://*/"
+  ]
+}
