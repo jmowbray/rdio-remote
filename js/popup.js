@@ -98,6 +98,7 @@ function updateDisplay(audioInfo) {
     $('.js-play').toggle(!audioInfo.currentlyPlaying);
     $('.js-pause').toggle(audioInfo.currentlyPlaying);
     $('.js-progress-bar').val(percentTimeElapsed);
+    $('.js-rdio-background').css('background-image', 'url(' + audioInfo.backgroundImageUrl + ')');
 }
 
 function calculatePercentTimeElapsed(time, duration) {

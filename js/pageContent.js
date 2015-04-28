@@ -58,10 +58,16 @@ function getCurrentAudioInfo() {
         response.duration = $('.player_bottom .duration').text();
         response.albumArtUrl = $('.player_bottom .right_controls .queue_art')[0].src;
         response.currentlyPlaying = $('.player_bottom .play_pause').hasClass('playing');
-        //response.backgroundImageUrl = $('.buffer_a, loaded').css('background-image').replace('url(','').replace(')','');
+        response.backgroundImageUrl = getBackgroundImageUrl();
     }
 
     return response;
+}
+
+function getBackgroundImageUrl() {
+    var $loadedBackgroundElement = $('.buffer_a').hasClass('loaded') ? $('.buffer_a') : $('.buffer_b');
+    var backgroundImageUrl = $loadedBackgroundElement.css('background-image').replace('url(','').replace(')','');
+    return backgroundImageUrl
 }
 
 function isCurrentRdioSessionTab() {
