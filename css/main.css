@@ -41,6 +41,7 @@ button {
 .album-art {
     width: 200px;
     height: 200px;
+    cursor: pointer;
 }
 
 .left-half {

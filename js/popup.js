@@ -4,12 +4,18 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function bindDomListeners() {
-    $('.js-command-btn').on('click', handleCommandButtonClicked)
+    $('.js-command-btn').on('click', handleCommandButtonClicked);
+    $('.js-album-art').on('click', makeCurrentSessionTabActive);
 }
 
 function handleCommandButtonClicked(buttonClickEvent) {
     var clickedButton = $(buttonClickEvent.currentTarget);
     sendButtonRequest(clickedButton);
+}
+
+function makeCurrentSessionTabActive() {
+    var currentSessionTabId = parseInt($('.js-current-rdio-tab-id').text());
+    chrome.tabs.update(currentSessionTabId, {active: true});
 }
 
 function sendButtonRequest(button) {
