@@ -10,22 +10,30 @@ var commandButtonSelectors = {
 };
 
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
-    if(request === 'lookingForCurrentRdioTab' && isCurrentRdioTab()) {
-        sendResponse(true);
-        openPortAndSendAudioInfo();
+    
+    if(request === 'isCurrentRdioSessionTab') {
+        handleIsCurrentRdioSessionRequest(sendResponse);
     }
 
     if(request.command) {
-        handleCommand(request.command);
+        handleCommandRequest(request.command);
     }
 });
 
-function handleCommand(commandString) {
+function handleIsCurrentRdioSessionRequest(sendResponseCallback) {
+    var isCurrentSessionTab = isCurrentRdioSessionTab();
+    if(isCurrentSessionTab) {
+        connectToExtensionAndSendAudioInfo();
+    }
+    sendResponseCallback(isCurrentSessionTab);
+}
+
+function handleCommandRequest(commandString) {
     var $commandButton = $(commandButtonSelectors[commandString]);
     $commandButton.click();
 }
 
-function openPortAndSendAudioInfo() {
+function connectToExtensionAndSendAudioInfo() {
     var port = chrome.runtime.connect({name: 'rdio_remote'});
 
     port.postMessage(getCurrentAudioInfo());
@@ -39,7 +47,7 @@ function openPortAndSendAudioInfo() {
 }
 
 function getCurrentAudioInfo() {
-    var response = {current: isCurrentRdioTab()};
+    var response = {current: isCurrentRdioSessionTab()};
     var songTitle;
     var artistTile;
 
@@ -56,15 +64,15 @@ function getCurrentAudioInfo() {
     return response;
 }
 
-function isCurrentRdioTab() {
-    var isCurrentRdioTab = false;
+function isCurrentRdioSessionTab() {
+    var isCurrentRdioSessionTab = false;
     var hasPlayerBottom;
     var hasRemoteControls;
     if(location.host === 'www.rdio.com') {
         hasPlayerBottom = $('.player_bottom').length > 0;
         hasRemoteControls = $('.remote_controls').is(':visible');
-        isCurrentRdioTab = hasPlayerBottom && !hasRemoteControls;
+        isCurrentRdioSessionTab = hasPlayerBottom && !hasRemoteControls;
     }
-    return isCurrentRdioTab;
+    
+    return isCurrentRdioSessionTab;
 }
-

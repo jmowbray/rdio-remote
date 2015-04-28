@@ -13,26 +13,50 @@ function handleCommandButtonClicked(buttonClickEvent) {
 }
 
 function sendButtonRequest(button) {
-    var currentRdioTabId = parseInt($('.js-current-rdio-tab-id').text());
+    var currentSessionTabId = parseInt($('.js-current-rdio-tab-id').text());
     var command = $(button).data('command');
 
-    chrome.tabs.sendMessage(currentRdioTabId, {command: command});
+    chrome.tabs.sendMessage(currentSessionTabId, {command: command});
 }
 
 function init() {
     chrome.tabs.query({url: 'http://*.rdio.com/*'}, function(rdioTabs) {
         if(rdioTabs.length) {
-            sendLookingForCurrentRdioTabMessage(rdioTabs);
+            sendIsCurrentSessionRequestToAllRdioTabs(rdioTabs);
         } else {
             showNoRdioSessionFound();
         }
     });
 }
 
-function sendLookingForCurrentRdioTabMessage(rdioTabs) {
+function sendIsCurrentSessionRequestToAllRdioTabs(rdioTabs) {
+    var sendTabMessageDeferreds = [];
+    var allResponses;
+    var atLeastOneIsCurrentSession;
+    
     _.each(rdioTabs, function(rdioTab) {
-        chrome.tabs.sendMessage(rdioTab.id, 'lookingForCurrentRdioTab');
+        sendTabMessageDeferreds.push(sendTabMessageDeferred(rdioTab.id, 'isCurrentRdioSessionTab'));
     });
+
+    $.when.apply($, sendTabMessageDeferreds).then(function() {
+        allResponses = arguments;
+        atLeastOneIsCurrentSession = _.contains(allResponses, true);
+        
+        if(!atLeastOneIsCurrentSession) {
+            showNoRdioSessionFound();
+        }
+    });
+}
+
+function sendTabMessageDeferred(tabId, message) {
+    var $deferred = $.Deferred();
+
+    chrome.tabs.sendMessage(tabId, message, function(response) {
+        response = response || false;
+        $deferred.resolve(response); 
+    });
+
+    return $deferred.promise();
 }
 
 function showNoRdioSessionFound() {
