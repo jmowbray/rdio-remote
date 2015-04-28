@@ -3,6 +3,7 @@ body {
     height: 220px;
     background-color: gray;
     color: white;
+    padding: 15px;
 }
 
 button {
