@@ -19,7 +19,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
         handleCommandRequest(request.command);
     }
 
-    if(request === 'playHereInstead') {
+    if(request === 'playHereInsteadRequest') {
         handlePlayHereInsteadRequest();
     }
 });
@@ -39,7 +39,7 @@ function handleCommandRequest(commandString) {
 
 function handlePlayHereInsteadRequest() {
     var $playHereInsteadButton = $('.remote_controls span.blue.button.has_icon');
-    var $playPausebutton = $(commandButtonSelectors.playpause);
+    var $playPauseButton = $(commandButtonSelectors.playpause);
     $playHereInsteadButton.click();
     $playPauseButton.click();
     connectToExtensionAndSendAudioInfo();

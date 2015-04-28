@@ -5,13 +5,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function bindDomListeners() {
     $('.js-command-btn').on('click', handleCommandButtonClicked);
-    $('.js-album-art').on('click', makeActiveSessionTabActive);
-    $('.js-play-here-btn').on('click', playHereInstead)
+    $('.js-album-art').on('click', handleAlbumArtClicked);
+    $('.js-play-here-btn').on('click', handlePlayHereInsteadButtonClicked)
 }
 
 function handleCommandButtonClicked(buttonClickEvent) {
     var clickedButton = $(buttonClickEvent.currentTarget);
     sendButtonRequest(clickedButton);
+}
+
+function handleAlbumArtClicked(imgClickEvent) {
+    makeActiveSessionTabActive();
 }
 
 function makeActiveSessionTabActive() {
@@ -21,9 +25,13 @@ function makeActiveSessionTabActive() {
     });
 }
 
-function playHereInstead() {
+function handlePlayHereInsteadButtonClicked(buttonClickEvent) {
+    sendPlayHereInsteadRequest();
+}
+
+function sendPlayHereInsteadRequest() {
     var activeSessionTabId = parseInt($('.js-active-rdio-tab-id').text());
-    chrome.tabs.sendMessage(activeSessionTabId, 'playHereInstead');
+    chrome.tabs.sendMessage(activeSessionTabId, 'playHereInsteadRequest');
 }
 
 function sendButtonRequest(button) {
@@ -81,18 +89,25 @@ function sendTabMessageDeferred(tabId, message) {
     return $deferred.promise();
 }
 
+function showActiveSessionInfo() {
+    $('.js-no-session-wrapper').hide();
+    $('.js-active-session-wrapper').show();
+}
+
 function showNoRdioSessionFound() {
-    $('.js-main-wrapper').hide();
+    $('.js-active-session-wrapper').hide();
     $('.js-play-here-btn').hide();
+    $('.js-no-session-message').text('No active Rdio sessions were detected.');
     $('.js-no-session-wrapper').show();
     $('.js-play-something-btn').show();
     $('.js-play-something-btn').on('click', openRdioInNewTab);
 }
 
 function showPlayingElsewhere(tabId) {
-    $('.js-main-wrapper').hide();
+    $('.js-active-session-wrapper').hide();
     $('.js-play-something-btn').hide();
     $('.js-play-here-btn').show();
+    $('.js-no-session-message').text('Rdio is playing elsewhere but can be controlled from here.');
     $('.js-no-session-wrapper').show();
     $('.js-active-rdio-tab-id').text(tabId);
 }
@@ -108,11 +123,12 @@ chrome.runtime.onConnect.addListener(function(port) {
 function portMsgListener(audioInfo, port) {
     if(port.name = 'rdio_remote') {
         $('.js-active-rdio-tab-id').text(port.sender.tab.id);
-        updateDisplay(audioInfo);
+        showActiveSessionInfo();
+        updateActiveSessionDisplay(audioInfo);
     }
 }
 
-function updateDisplay(audioInfo) {
+function updateActiveSessionDisplay(audioInfo) {
     var percentTimeElapsed = calculatePercentTimeElapsed(audioInfo.time, audioInfo.duration);
     $('.js-song-title').html(audioInfo.songTitle);
     $('.js-artist-title').text(audioInfo.artistTitle);

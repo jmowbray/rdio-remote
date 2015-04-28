@@ -11,7 +11,7 @@
   
   <body>
     <div class="js-rdio-background"></div>
-    <div class="main-wrapper js-main-wrapper">      
+    <div class="active-session-wrapper js-active-session-wrapper">
       <div class="left-half">
           <img class="js-album-art album-art"/>
       </div>
@@ -54,10 +54,10 @@
     <span class="js-active-rdio-tab-id" style="display:none;"></span>
 
     <div class="no-session-wrapper js-no-session-wrapper" style="display: none;">
-      <div class="no-session-text"><span>Unable to detect an active Rdio session</span></div>
-      <div class="no-session-button">
-        <button class="play-something-btn js-play-something-btn">Play Something!</button>
-        <button class="play-here-btn js-play-here-btn" style="display:none;">Play Here Instead</button>
+      <div class="no-session-text"><span class="js-no-session-message"></span></div>
+      <div class="no-session-button-wrapper">
+        <button class="no-session-btn js-play-something-btn">Play Something!</button>
+        <button class="no-session-btn js-play-here-btn" style="display:none;">Play Here Instead</button>
       </div>
     </div>  
   </body>

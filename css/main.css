@@ -4,13 +4,15 @@ body {
     background-color: gray;
     color: white;
     padding: 15px;
+    font-family: "Whitney SSm 5r", "lucida grande", tahoma, verdana, arial, sans-serif !important;
+    -webkit-font-smoothing: antialiased;
 }
 
 button {
     cursor: pointer;
 }
 
-.main-wrapper {
+.active-session-wrapper {
     width: 100%;
 }
 
@@ -94,11 +96,11 @@ button {
     font-size: 20px;
 }
 
-.no-session-button {
+.no-session-button-wrapper {
     margin-top: 10px;
 }
 
-.play-something-btn {
+.no-session-btn {
     display: inline-block;
     margin-left: auto;
     margin-right: auto;
