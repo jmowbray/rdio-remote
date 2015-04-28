@@ -11,26 +11,38 @@ var commandButtonSelectors = {
 
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     
-    if(request === 'isCurrentRdioSessionTab') {
-        handleIsCurrentRdioSessionRequest(sendResponse);
+    if(request === 'isActiveRdioSessionTab') {
+        handleIsActiveRdioSessionRequest(sendResponse);
     }
 
     if(request.command) {
         handleCommandRequest(request.command);
     }
+
+    if(request === 'playHereInstead') {
+        handlePlayHereInsteadRequest();
+    }
 });
 
-function handleIsCurrentRdioSessionRequest(sendResponseCallback) {
-    var isCurrentSessionTab = isCurrentRdioSessionTab();
-    if(isCurrentSessionTab) {
+function handleIsActiveRdioSessionRequest(sendResponseCallback) {
+    var currentSessionStatus = getCurrentSessionStatus();
+    if(currentSessionStatus.isActiveRdioSession) {
         connectToExtensionAndSendAudioInfo();
     }
-    sendResponseCallback(isCurrentSessionTab);
+    sendResponseCallback(currentSessionStatus);
 }
 
 function handleCommandRequest(commandString) {
     var $commandButton = $(commandButtonSelectors[commandString]);
     $commandButton.click();
+}
+
+function handlePlayHereInsteadRequest() {
+    var $playHereInsteadButton = $('.remote_controls span.blue.button.has_icon');
+    var $playPausebutton = $(commandButtonSelectors.playpause);
+    $playHereInsteadButton.click();
+    $playPauseButton.click();
+    connectToExtensionAndSendAudioInfo();
 }
 
 function connectToExtensionAndSendAudioInfo() {
@@ -47,11 +59,11 @@ function connectToExtensionAndSendAudioInfo() {
 }
 
 function getCurrentAudioInfo() {
-    var response = {current: isCurrentRdioSessionTab()};
+    var response = {active: isActiveRdioSessionTab()};
     var songTitle;
     var artistTile;
 
-    if(response.current) {
+    if(response.active) {
         response.songTitle = $('.player_bottom .song_title').text();
         response.artistTitle = $('.drag_container .artist_title').text();
         response.time = $('.player_bottom .time').text();
@@ -70,15 +82,20 @@ function getBackgroundImageUrl() {
     return backgroundImageUrl
 }
 
-function isCurrentRdioSessionTab() {
-    var isCurrentRdioSessionTab = false;
-    var hasPlayerBottom;
-    var hasRemoteControls;
-    if(location.host === 'www.rdio.com') {
-        hasPlayerBottom = $('.player_bottom').length > 0;
-        hasRemoteControls = $('.remote_controls').is(':visible');
-        isCurrentRdioSessionTab = hasPlayerBottom && !hasRemoteControls;
-    }
+function getCurrentSessionStatus() {
+    var isRdioSession = $('.player_bottom').length > 0;
+    var isPlayingElsewhere = $('.remote_controls').is(':visible');
+    var isActiveRdioSession = isRdioSession && !isPlayingElsewhere;    
     
-    return isCurrentRdioSessionTab;
+    var sessionStatus = {
+        isRdioSession: isRdioSession,
+        isPlayingElsewhere: isPlayingElsewhere,
+        isActiveRdioSession: isActiveRdioSession
+    };
+
+    return sessionStatus;
+}
+
+function isActiveRdioSessionTab() {
+    return getCurrentSessionStatus().isActiveRdioSession === true;    
 }

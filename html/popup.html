@@ -51,11 +51,14 @@
 
       
     </div>  
-    <span class="js-current-rdio-tab-id" style="display:none;"></span>
+    <span class="js-active-rdio-tab-id" style="display:none;"></span>
 
     <div class="no-session-wrapper js-no-session-wrapper" style="display: none;">
-      <div class="no-session-text"><span>Unable to detect current Rdio session</span></div>
-      <div class="no-session-button"><button class="play-something-btn js-play-something-btn">Play Something!</button></div>
+      <div class="no-session-text"><span>Unable to detect an active Rdio session</span></div>
+      <div class="no-session-button">
+        <button class="play-something-btn js-play-something-btn">Play Something!</button>
+        <button class="play-here-btn js-play-here-btn" style="display:none;">Play Here Instead</button>
+      </div>
     </div>  
   </body>
 </html>
