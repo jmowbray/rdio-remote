@@ -15,7 +15,9 @@ function handleCommandButtonClicked(buttonClickEvent) {
 
 function makeCurrentSessionTabActive() {
     var currentSessionTabId = parseInt($('.js-current-rdio-tab-id').text());
-    chrome.tabs.update(currentSessionTabId, {active: true});
+    chrome.tabs.update(currentSessionTabId, {active: true}, function(currentSessionTab) {
+        chrome.windows.update(currentSessionTab.windowId, {focused: true});
+    });
 }
 
 function sendButtonRequest(button) {
