@@ -36,8 +36,13 @@ function sendLookingForCurrentRdioTabMessage(rdioTabs) {
 }
 
 function showNoRdioSessionFound() {
-    $('.remote-controls-wrapper').hide();
-    $('.session-not-found-wrapper').show();
+    $('.js-main-wrapper').hide();
+    $('.js-no-session-wrapper').show();
+    $('.js-play-something-btn').on('click', openRdioInNewTab);
+}
+
+function openRdioInNewTab() {
+    chrome.tabs.create({url: 'http://www.rdio.com', active: true});
 }
 
 chrome.runtime.onConnect.addListener(function(port) {
