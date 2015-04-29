@@ -85,7 +85,8 @@ function getBackgroundImageUrl() {
 function getCurrentSessionStatus() {
     var isRdioSession = $('.player_bottom').length > 0;
     var isPlayingElsewhere = $('.remote_controls').is(':visible');
-    var isActiveRdioSession = isRdioSession && !isPlayingElsewhere;    
+    var noTrack = $('.no_track_text').length > 0;
+    var isActiveRdioSession = isRdioSession && !isPlayingElsewhere && !noTrack;       
     
     var sessionStatus = {
         isRdioSession: isRdioSession,

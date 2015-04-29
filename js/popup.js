@@ -42,7 +42,7 @@ function sendButtonRequest(button) {
 }
 
 function init() {
-    chrome.tabs.query({url: 'http://*.rdio.com/*'}, function(rdioTabs) {
+    chrome.tabs.query({url: '*://*.rdio.com/*'}, function(rdioTabs) {
         if(rdioTabs.length) {
             sendIsActiveSessionRequestToAllRdioTabs(rdioTabs);
         } else {
@@ -100,7 +100,7 @@ function showNoRdioSessionFound() {
     $('.js-no-session-message').text('No active Rdio sessions were detected.');
     $('.js-no-session-wrapper').show();
     $('.js-play-something-btn').show();
-    $('.js-play-something-btn').on('click', openRdioInNewTab);
+    $('.js-play-something-btn').on('click', openOrGoToRdioTab);
 }
 
 function showPlayingElsewhere(tabId) {
@@ -112,8 +112,16 @@ function showPlayingElsewhere(tabId) {
     $('.js-active-rdio-tab-id').text(tabId);
 }
 
-function openRdioInNewTab() {
-    chrome.tabs.create({url: 'http://www.rdio.com', active: true});
+function openOrGoToRdioTab() {    
+    var firstRdioTab;
+    chrome.tabs.query({url: '*://*.rdio.com/*'}, function(rdioTabs) {
+        if(rdioTabs.length) {
+            firstRdioTab = rdioTabs[0];
+            chrome.tabs.update(firstRdioTab.id, {active: true});
+        } else {
+            chrome.tabs.create({url: 'http://www.rdio.com', active: true});
+        }
+    });
 }
 
 chrome.runtime.onConnect.addListener(function(port) {

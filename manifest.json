@@ -21,6 +21,6 @@
   "permissions": [
     "tabs",
     "background",
-    "http://*/"
+    "*://*.rdio.com/"
   ]
 }
