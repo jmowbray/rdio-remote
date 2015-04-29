@@ -1,11 +1,14 @@
-body {
-    width: 400px;
-    height: 220px;
-    background-color: gray;
+html, body {
+    width: 430px;
+    height: 250px;
     color: white;
-    padding: 15px;
+    margin: 0px;
     font-family: "Whitney SSm 5r", "lucida grande", tahoma, verdana, arial, sans-serif !important;
     -webkit-font-smoothing: antialiased;
+}
+
+body {
+    background-color: gray;
 }
 
 button {
@@ -13,7 +16,9 @@ button {
 }
 
 .active-session-wrapper {
-    width: 100%;
+    width: 400px;
+    height: 220px;
+    padding: 20px;
 }
 
 .current-song {
@@ -50,6 +55,7 @@ button {
 .left-half {
     display: inline-block;
     width: 50%;
+    float: left;
 }
 
 .right-half {
@@ -66,7 +72,9 @@ button {
 }
 
 .bottom {
-    width: 100%;
+    display: inline-block;
+    width: 400px;
+    height: 15px;
     margin-top: 8px;
 }
 
@@ -74,6 +82,7 @@ button {
     display: inline-block;
     width: 10%;
     font-size: 12px;
+    opacity: 0.5;
 }
 
 .progress-bar {
@@ -86,6 +95,7 @@ button {
     width: 10%;
     float: right;
     font-size: 12px;
+    opacity: 0.5;
 }
 
 .no-session-wrapper {
@@ -111,19 +121,19 @@ button {
     background-color: #0092cf;
     font-size: 20px;
     color: white;
-    cursor: pointer;    
+    cursor: pointer;
 }
 
 .js-rdio-background {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  z-index: -1;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    z-index: -1;
 }
 
 .song-progress-wrapper {
