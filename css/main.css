@@ -125,3 +125,23 @@ button {
   background-position: center center;
   z-index: -1;
 }
+
+.song-progress-wrapper {
+    width:75%;
+    height: 5px;
+    display: inline-block;
+}
+
+.song-progress-completed {
+    height: 2px;
+    width: 0%;
+    float: left;
+    background-color: white;
+}
+
+.song-progress-remaining {
+    height: 2px;
+    width: 100%;
+    float: right;
+    background-color: rgba(255, 255, 255, 0.5);
+}

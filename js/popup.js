@@ -137,7 +137,8 @@ function updateActiveSessionDisplay(audioInfo) {
     $('.js-album-art').attr('src', audioInfo.albumArtUrl);
     $('.js-play').toggle(!audioInfo.currentlyPlaying);
     $('.js-pause').toggle(audioInfo.currentlyPlaying);
-    $('.js-progress-bar').val(percentTimeElapsed);
+    $('.js-progress-completed').css('width', Math.round(percentTimeElapsed) + '%');
+    $('.js-progress-remaining').css('width', 100 - Math.round(percentTimeElapsed) + '%');
     $('.js-rdio-background').css('background-image', 'url(' + audioInfo.backgroundImageUrl + ')');
 }
 
