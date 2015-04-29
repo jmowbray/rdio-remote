@@ -63,7 +63,6 @@ function sendIsActiveSessionRequestToAllRdioTabs(rdioTabs) {
 
     $.when.apply($, sendTabMessageDeferreds).then(function() {
         allSessionStatuses = arguments;
-        console.log('all', allSessionStatuses);
         atLeastOneIsActiveSession = _.findWhere(allSessionStatuses, {isActiveRdioSession: true});
         firstPlayElsewhereTab = _.findWhere(allSessionStatuses, {isPlayingElsewhere: true});
 
