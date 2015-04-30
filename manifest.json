@@ -1,6 +1,6 @@
 {
   "name": "Rdio Remote",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "manifest_version": 2,
   "description": "Control Rdio regardless of the active browser tab.",
   "background": {

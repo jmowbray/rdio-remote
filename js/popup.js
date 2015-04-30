@@ -15,13 +15,13 @@ function handleCommandButtonClicked(buttonClickEvent) {
 }
 
 function handleAlbumArtClicked(imgClickEvent) {
-    makeActiveSessionTabActive();
+    var activeSessionTabId = parseInt($('.js-active-rdio-tab-id').text());
+    makeWindowAndTabActive(activeSessionTabId);
 }
 
-function makeActiveSessionTabActive() {
-    var activeSessionTabId = parseInt($('.js-active-rdio-tab-id').text());
-    chrome.tabs.update(activeSessionTabId, {active: true}, function(activeSessionTab) {
-        chrome.windows.update(activeSessionTab.windowId, {focused: true});
+function makeWindowAndTabActive(tabId) {
+    chrome.tabs.update(tabId, {active: true}, function(activeTab) {
+        chrome.windows.update(activeTab.windowId, {focused: true});
     });
 }
 
@@ -116,9 +116,11 @@ function openOrGoToRdioTab() {
     chrome.tabs.query({url: '*://*.rdio.com/*'}, function(rdioTabs) {
         if(rdioTabs.length) {
             firstRdioTab = rdioTabs[0];
-            chrome.tabs.update(firstRdioTab.id, {active: true});
+            makeWindowAndTabActive(firstRdioTab.id);
         } else {
-            chrome.tabs.create({url: 'http://www.rdio.com', active: true});
+            chrome.tabs.create({url: 'http://www.rdio.com'}, function(newTab) {
+                makeActiveSessionTabActive(newTab.id);
+            });
         }
     });
 }
