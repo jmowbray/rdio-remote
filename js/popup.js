@@ -149,6 +149,17 @@ function updateActiveSessionDisplay(audioInfo) {
     $('.js-progress-completed').css('width', Math.round(percentTimeElapsed) + '%');
     $('.js-progress-remaining').css('width', 100 - Math.round(percentTimeElapsed) + '%');
     $('.js-rdio-background').css('background-image', 'url(' + audioInfo.backgroundImageUrl + ')');
+    showHideShuffleAndRepeat(audioInfo);
+}
+
+function showHideShuffleAndRepeat(audioInfo) {
+    var shouldShow = audioInfo.shuffle.opacity > 0 && audioInfo.repeat.opacity > 0;
+
+    $('.js-shuffle').toggle(shouldShow);
+    $('.js-repeat').toggle(shouldShow);
+    $('.js-shuffle').css('opacity', audioInfo.shuffle.opacity);
+    $('.js-repeat').css('opacity', audioInfo.repeat.opacity).toggleClass('one', audioInfo.repeat.isRepeatOne);
+    $('.song-progress-wrapper').toggleClass('shuffle-repeat', shouldShow);
 }
 
 function calculatePercentTimeElapsed(time, duration) {

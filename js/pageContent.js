@@ -4,9 +4,11 @@
 *
 */
 var commandButtonSelectors = {
-    prev: 'button.prev',
-    playpause: 'button.play_pause',
-    next: 'button.next'
+    prev: '.left_controls button.prev',
+    playpause: '.left_controls button.play_pause',
+    next: '.left_controls button.next',
+    shuffle: '.shuffle',
+    repeat: '.repeat'
 };
 
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
@@ -60,8 +62,7 @@ function connectToExtensionAndSendAudioInfo() {
 
 function getCurrentAudioInfo() {
     var response = {active: isActiveRdioSessionTab()};
-    var songTitle;
-    var artistTile;
+    var shuffleAndRepeatInfo;
 
     if(response.active) {
         response.songTitle = $('.player_bottom .song_title').text();
@@ -71,9 +72,26 @@ function getCurrentAudioInfo() {
         response.albumArtUrl = $('.player_bottom .right_controls .queue_art')[0].src;
         response.currentlyPlaying = $('.player_bottom .play_pause').hasClass('playing');
         response.backgroundImageUrl = getBackgroundImageUrl();
+
+        shuffleAndRepeatInfo = getShuffleAndRepeatInfo();
+        response.shuffle = shuffleAndRepeatInfo.shuffle;
+        response.repeat = shuffleAndRepeatInfo.repeat;
     }
 
     return response;
+}
+
+function getShuffleAndRepeatInfo() {
+    var shuffleControl = $(commandButtonSelectors.shuffle);
+    var shuffleOpacity = shuffleControl.is(':visible') ? shuffleControl.css('opacity') : 0;
+    var repeatControl = $(commandButtonSelectors.repeat);
+    var repeatOpacity = repeatControl.is(':visible') ? repeatControl.css('opacity') : 0;
+    var isRepeatOne = repeatControl.hasClass('one');
+
+    var shuffleInfo = {opacity: shuffleOpacity};
+    var repeatInfo = {opacity: repeatOpacity, isRepeatOne: isRepeatOne};
+
+    return {shuffle: shuffleInfo, repeat: repeatInfo};
 }
 
 function getBackgroundImageUrl() {
