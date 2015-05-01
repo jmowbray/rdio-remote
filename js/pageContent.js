@@ -4,11 +4,11 @@
 *
 */
 var commandButtonSelectors = {
-    prev: '.left_controls button.prev',
-    playpause: '.left_controls button.play_pause',
-    next: '.left_controls button.next',
-    shuffle: '.shuffle',
-    repeat: '.repeat'
+    prev: '.player_bottom .left_controls button.prev',
+    playpause: '.player_bottom .left_controls button.play_pause',
+    next: '.player_bottom .left_controls button.next',
+    shuffle: '.player_bottom .shuffle',
+    repeat: '.player_bottom .repeat'
 };
 
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
@@ -53,7 +53,7 @@ function connectToExtensionAndSendAudioInfo() {
     port.postMessage(getCurrentAudioInfo());
     var intervalId = setInterval(function() {
         port.postMessage(getCurrentAudioInfo());
-    }, 1000);
+    }, 500);
 
     port.onDisconnect.addListener(function(disconnectedPort){
         clearInterval(intervalId);
